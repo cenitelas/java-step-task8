@@ -1,8 +1,10 @@
 package org.step;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -28,5 +30,30 @@ public class Main {
         for (Employee employee : employees.collect(Collectors.toList())){
             System.out.printf("%s %s\n",employee.getFirstName(), employee.getLastName());
         }
+        collect.close();
+
+        //IntStream
+        System.out.println("\n\nIntStream\n");
+        collect = Employees.employees.stream();
+        IntStream intStream = Arrays.stream(collect.mapToInt(employee -> employee.getAge()).toArray());
+
+        String years = intStream.mapToObj(String::valueOf).collect(Collectors.joining(","));
+        System.out.println("Years = "+years);
+        intStream.close();
+        collect.close();
+
+        collect = Employees.employees.stream();
+        intStream = Arrays.stream(collect.mapToInt(employee -> employee.getAge()).toArray());
+        System.out.println("Average years = "+intStream.average().getAsDouble());
+        intStream.close();
+        collect.close();
+
+        collect = Employees.employees.stream();
+        intStream = Arrays.stream(collect.mapToInt(employee -> employee.getAge()).toArray());
+        String sortedYears = intStream.sorted().mapToObj(String::valueOf).collect(Collectors.joining(","));
+        System.out.println("Sorted years = "+sortedYears);
+        intStream.close();
+
+
     }
 }
